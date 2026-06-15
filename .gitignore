@@ -1,0 +1,28 @@
+# Build output
+/dist/
+/OpenJKDF2/build_aarch64/
+/OpenJKDF2/build_linux64/
+
+# Port binaries and bundled libs (built by ./build.sh)
+/port/openjkdf2/openjkdf2.aarch64
+/port/openjkdf2/libs.aarch64/*
+!/port/openjkdf2/libs.aarch64/.gitkeep
+
+# Legacy / obsolete in port tree
+/port/openjkdf2/gl4es.aarch64/
+
+# Local game files for dev (not part of the port repo)
+/gamedata/
+
+# Local notes / drafts (not part of the port)
+REPLY_*.txt
+*.draft.*
+
+# Runtime logs
+log.txt
+startup.log
+logs.txt
+
+# Misc
+*.zip
+.DS_Store

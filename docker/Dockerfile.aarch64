@@ -1,0 +1,25 @@
+# Reproducible aarch64 cross-build for ArkOS (glibc 2.30) and older PortMaster CFWs.
+# Bleeding-edge host sysroots (glibc 2.38+) produce binaries that fail on device.
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    git \
+    make \
+    zip \
+    python3 \
+    python3-venv \
+    python3-pip \
+    gcc-aarch64-linux-gnu \
+    g++-aarch64-linux-gnu \
+    libc6-arm64-cross \
+    libc6-dev-arm64-cross \
+    linux-libc-dev-arm64-cross \
+    libgles2-mesa-dev \
+    libegl1-mesa-dev \
+    && pip3 install --no-cache-dir 'cmake>=3.20' \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /work

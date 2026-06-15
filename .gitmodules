@@ -1,0 +1,4 @@
+[submodule "OpenJKDF2"]
+	path = OpenJKDF2
+	url = https://github.com/juanvillacortac/OpenJKDF2.git
+	branch = master
