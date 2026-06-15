@@ -18,7 +18,7 @@ if [[ "${OPENJKDF2_PORTABLE_BUILD:-}" != "1" ]] && [[ -f /usr/aarch64-linux-gnu/
     if strings /usr/aarch64-linux-gnu/lib/libc.so.6 | grep -qE 'GLIBC_2\.(3[4-9]|[4-9][0-9])'; then
         echo "WARNING: Host aarch64 sysroot uses glibc >= 2.34 ($(aarch64-linux-gnu-gcc --version | head -1))." >&2
         echo "         Binaries may not run on ArkOS and other older CFWs." >&2
-        echo "         Use: ./build.sh --docker   (Ubuntu 20.04, glibc 2.31)" >&2
+        echo "         Use: ./build.sh   (Docker, Ubuntu 20.04 glibc 2.31) or ./build.sh --native" >&2
         echo "" >&2
     fi
 fi

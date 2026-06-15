@@ -12,6 +12,19 @@ cd openjkdf2-aarch64-portmaster
 ./build.sh
 ```
 
+**Host requirements (Docker build, default):** `git`, `docker`, and `zip` only. The cross-compiler, CMake, Python, and sysroot live inside the Ubuntu 20.04 container (`docker/Dockerfile.aarch64`). First run builds the image and compiles the engine (~10–30 min, several GB under `OpenJKDF2/build_aarch64/`).
+
+```bash
+# Arch / CachyOS
+sudo pacman -S --needed git docker zip
+
+# Debian / Ubuntu
+sudo apt install git docker.io zip
+sudo usermod -aG docker $USER   # log out/in to run docker without sudo
+```
+
+Use `./build.sh --native` only if your host already has an aarch64 cross toolchain with glibc ≤ 2.30 (see below).
+
 ### First-time setup (this workspace)
 
 If you already have `OpenJKDF2/` cloned locally:
@@ -35,7 +48,8 @@ Output:
 ## Build options
 
 ```bash
-./build.sh                 # Full: submodule + compile + stage + zip
+./build.sh                 # Docker cross-compile (default) + stage + zip
+./build.sh --native        # Host cross-compile (toolchain on your machine)
 ./build.sh --package-only  # Re-stage binary and zip (engine already built)
 ./build.sh --no-zip        # Compile and stage only
 ./build.sh --check         # Validate metadata (no compile)
@@ -44,7 +58,9 @@ Output:
 
 ### Cross-compilation requirements
 
-The repo is **mostly standalone**: zlib, libpng, SDL2, SDL_mixer, and OpenAL are built from the engine’s git submodules. You do **not** need JKDF2 game files, GL4ES, or system SDL/OpenAL dev packages for the target.
+**Default (`./build.sh`):** Docker only on the host (`git`, `docker`, `zip`). Everything else is installed in the builder image.
+
+**Native (`./build.sh --native`):** The repo is **mostly standalone**: zlib, libpng, SDL2, SDL_mixer, and OpenAL are built from the engine’s git submodules. You do **not** need JKDF2 game files, GL4ES, or system SDL/OpenAL dev packages for the target.
 
 You **do** need a Linux build host with:
 
@@ -66,14 +82,14 @@ You **do** need a Linux build host with:
 
 **ArkOS ships glibc 2.30.** Cross-compiling on a bleeding-edge host (e.g. Arch/CachyOS with glibc 2.38) produces binaries that fail with `GLIBC_2.32+` / `GLIBCXX_3.4.29` errors.
 
-Use the Docker builder (Ubuntu 20.04 cross toolchain). The staged binary is checked to require **GLIBC ≤ 2.30** (current build peaks at **2.29**):
+**`./build.sh` uses Docker by default** (Ubuntu 20.04 cross toolchain). The staged binary is checked to require **GLIBC ≤ 2.30** (current build peaks at **2.29**):
 
 ```bash
-./build.sh --docker
+./build.sh
 # or: ./scripts/build-engine-docker.sh
 ```
 
-Requires Docker. Release builds for distribution should use `--docker` unless your native aarch64 sysroot is already ≤ 2.30.
+Use `./build.sh --native` only if your native aarch64 sysroot is already ≤ 2.30.
 
 #### Arch / CachyOS
 

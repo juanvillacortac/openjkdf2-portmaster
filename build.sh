@@ -12,14 +12,14 @@ done
 PACKAGE_ONLY=0
 SKIP_ZIP=0
 CHECK_ONLY=0
-USE_DOCKER=0
+USE_DOCKER=1
 
 usage() {
     cat <<'EOF'
 Usage: ./build.sh [options]
 
-  (no options)     Init submodule, cross-compile engine, stage port, create zip
-  --docker         Build engine in Ubuntu 20.04 Docker (glibc 2.31, for ArkOS)
+  (no options)     Init submodule, cross-compile in Docker, stage port, create zip
+  --native         Cross-compile on host (needs aarch64-linux-gnu toolchain; glibc may be too new for ArkOS)
   --package-only   Skip engine build; reuse existing build_aarch64/openjkdf2
   --no-zip         Build and stage port/ but do not create dist/openjkdf2.zip
   --check          Validate port metadata only (no compile, no zip)
@@ -38,6 +38,7 @@ for arg in "$@"; do
     case "$arg" in
         --package-only) PACKAGE_ONLY=1 ;;
         --docker) USE_DOCKER=1 ;;
+        --native) USE_DOCKER=0 ;;
         --no-zip) SKIP_ZIP=1 ;;
         --check) CHECK_ONLY=1 ;;
         -h|--help) usage; exit 0 ;;
