@@ -46,11 +46,18 @@ section "PortMaster metadata"
     || warn "Missing cover.png (optional; gameinfo.xml references ./cover.png)"
 
 BINARY="$PORT/openjkdf2/openjkdf2.aarch64"
+BINARY_X64="$PORT/openjkdf2/openjkdf2.x86_64"
 if [[ -f "$BINARY" ]]; then
     ok "openjkdf2.aarch64 staged"
 else
     warn "openjkdf2.aarch64 missing — run ./build.sh before releasing"
     [[ $STRICT -eq 1 ]] && bad "Strict mode: binary required"
+fi
+if [[ -f "$BINARY_X64" ]]; then
+    ok "openjkdf2.x86_64 staged"
+else
+    warn "openjkdf2.x86_64 missing — run ./build.sh (or build-engine-x86_64-docker.sh)"
+    [[ $STRICT -eq 1 ]] && bad "Strict mode: x86_64 binary required"
 fi
 
 if [[ $CHECK_ONLY -eq 1 ]]; then
@@ -60,6 +67,7 @@ if [[ $CHECK_ONLY -eq 1 ]]; then
 fi
 
 [[ -f "$BINARY" ]] || bad "Cannot create zip without openjkdf2.aarch64 (run ./build.sh)"
+[[ -f "$BINARY_X64" ]] || bad "Cannot create zip without openjkdf2.x86_64 (run ./build.sh)"
 
 # PortMaster expects screenshot/cover next to port.json; ES uses gameinfo.xml paths.
 for asset in screenshot.jpg screenshot.png cover.jpg cover.png; do

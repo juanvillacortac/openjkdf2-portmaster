@@ -9,7 +9,9 @@ LAUNCHER="$PORT_ROOT/Star Wars Jedi Knight - Dark Forces II.sh"
 HELPERS_DIR="$GAMEDIR/helpers"
 LAUNCH_HELPERS="$HELPERS_DIR/gamepad.inc"
 LIBS="$GAMEDIR/libs.aarch64"
+LIBS_X64="$GAMEDIR/libs.x86_64"
 BINARY="$GAMEDIR/openjkdf2.aarch64"
+BINARY_X64="$GAMEDIR/openjkdf2.x86_64"
 STRICT=0
 
 for arg in "$@"; do
@@ -141,6 +143,37 @@ if [[ -f "$BINARY" ]]; then
 else
     warn "openjkdf2.aarch64 not built — run ./build.sh"
     [[ $STRICT -eq 1 ]] && bad "Strict mode: binary required"
+fi
+
+section "x86_64 binary"
+if [[ -f "$BINARY_X64" ]]; then
+    [[ -x "$BINARY_X64" ]] && ok "openjkdf2.x86_64 is executable" || warn "openjkdf2.x86_64 not +x"
+    FILE_CMD="$(file_bin)"
+    RELF="$(readelf_bin)"
+    if [[ -n "$FILE_CMD" ]]; then
+        arch="$("$FILE_CMD" "$BINARY_X64" 2>/dev/null || true)"
+        echo "$arch" | grep -qi 'x86-64' && ok "Architecture: x86_64" || bad "Not x86_64: $arch"
+        echo "$arch" | grep -qi 'ELF' && ok "ELF binary" || bad "Not an ELF binary"
+    fi
+    if [[ -n "$RELF" ]]; then
+        while IFS= read -r lib; do
+            case "$lib" in
+                libSDL2-2.0.so.0|libSDL2_mixer-2.0.so.0)
+                    warn "NEEDED $lib (system lib on device, not bundled)"
+                    ;;
+                libopenal.so.1)
+                    [[ -f "$LIBS_X64/libopenal.so" ]] && ok "NEEDED $lib → libs.x86_64/libopenal.so" \
+                        || warn "NEEDED $lib but missing libs.x86_64/libopenal.so"
+                    ;;
+                libGL.so.1)
+                    ok "NEEDED $lib (system OpenGL on RetroDECK/PC)"
+                    ;;
+            esac
+        done < <("$RELF" -d "$BINARY_X64" 2>/dev/null | sed -n 's/.*Shared library: \[\(.*\)\]/\1/p' || true)
+    fi
+else
+    warn "openjkdf2.x86_64 not built — run ./scripts/build-engine-x86_64-docker.sh"
+    [[ $STRICT -eq 1 ]] && bad "Strict mode: x86_64 binary required"
 fi
 
 section "Cross-compile tools"

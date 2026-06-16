@@ -6,7 +6,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PORT="$ROOT/port/openjkdf2"
 
-mkdir -p "$PORT/jk1" "$PORT/mots" "$PORT/expansions" "$PORT/mods" "$PORT/conf" "$PORT/licenses" "$PORT/libs.aarch64"
+mkdir -p "$PORT/jk1" "$PORT/mots" "$PORT/expansions" "$PORT/mods" "$PORT/conf" "$PORT/licenses" "$PORT/libs.aarch64" "$PORT/libs.x86_64"
 mkdir -p "$PORT/jk1/controls"
 
 write_placeholder() {
