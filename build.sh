@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 
 # Keep launcher/scripts LF-only (CRLF breaks execution on device)
-for _sh in "$ROOT/build.sh" "$ROOT"/scripts/*.sh "$ROOT"/port/*.sh "$ROOT"/port/openjkdf2/helpers/gamepad.inc "$ROOT"/port/openjkdf2/helpers/swap.inc; do
+for _sh in "$ROOT/build.sh" "$ROOT"/scripts/*.sh "$ROOT"/port/*.sh "$ROOT"/port/openjkdf2/helpers/gamepad.inc; do
     [[ -f "$_sh" ]] && grep -q $'\r' "$_sh" 2>/dev/null && sed -i 's/\r$//' "$_sh"
 done
 

@@ -8,7 +8,6 @@ GAMEDIR="$PORT_ROOT/openjkdf2"
 LAUNCHER="$PORT_ROOT/Star Wars Jedi Knight - Dark Forces II.sh"
 HELPERS_DIR="$GAMEDIR/helpers"
 LAUNCH_HELPERS="$HELPERS_DIR/gamepad.inc"
-SWAP_HELPERS="$HELPERS_DIR/swap.inc"
 LIBS="$GAMEDIR/libs.aarch64"
 BINARY="$GAMEDIR/openjkdf2.aarch64"
 STRICT=0
@@ -57,7 +56,6 @@ file_bin() {
 section "Port structure"
 [[ -f "$LAUNCHER" ]] && ok "Launcher: $(basename "$LAUNCHER")" || bad "Missing launcher: $LAUNCHER"
 [[ -f "$LAUNCH_HELPERS" ]] && ok "helpers/gamepad.inc" || bad "Missing $LAUNCH_HELPERS"
-[[ -f "$SWAP_HELPERS" ]] && ok "helpers/swap.inc" || bad "Missing $SWAP_HELPERS"
 [[ ! -f "$GAMEDIR/launch.run" ]] && ok "no launch.run (logic in PortMaster .sh wrappers)" || warn "Remove obsolete launch.run"
 [[ -d "$GAMEDIR" ]] && ok "openjkdf2/ folder" || bad "Missing $GAMEDIR"
 [[ -f "$PORT_ROOT/port.json" ]] && ok "port.json present" || warn "Missing port/port.json"
@@ -75,16 +73,13 @@ if [[ -f "$LAUNCHER" ]]; then
         bad "Syntax error in launcher"
     fi
 
-    for token in control.txt get_controls bind_directories pm_finish GPTOKEYB helpers/gamepad.inc helpers/swap.inc; do
+    for token in control.txt get_controls bind_directories pm_finish GPTOKEYB helpers/gamepad.inc DEVICE_RAM; do
         grep -q "$token" "$LAUNCHER" && ok "Wrapper uses $token" || warn "Wrapper missing $token"
     done
     grep -q '/\$directory/ports/openjkdf2' "$LAUNCHER" && ok "Wrapper uses \$directory GAMEDIR" || warn "Wrapper missing \$directory GAMEDIR"
 
     if [[ -f "$LAUNCH_HELPERS" ]]; then
         bash -n "$LAUNCH_HELPERS" 2>/dev/null && ok "helpers/gamepad.inc valid bash syntax" || bad "Syntax error in gamepad.inc"
-    fi
-    if [[ -f "$SWAP_HELPERS" ]]; then
-        bash -n "$SWAP_HELPERS" 2>/dev/null && ok "helpers/swap.inc valid bash syntax" || bad "Syntax error in swap.inc"
     fi
 
     grep -q 'gl4es' "$LAUNCHER" && warn "Launcher mentions gl4es (this port uses native GLES)" || ok "No GL4ES in launcher"
