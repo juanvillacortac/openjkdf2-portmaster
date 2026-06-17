@@ -2,11 +2,16 @@
 /dist/
 /OpenJKDF2/build_aarch64/
 /OpenJKDF2/build_linux64/
+/OpenJKDF2/build_linux64_gles/
+/OpenJKDF2/build_linux64_gles_kms/
 
 # Port binaries and bundled libs (built by ./build.sh)
 /port/openjkdf2/openjkdf2.aarch64
+/port/openjkdf2/openjkdf2.x86_64
 /port/openjkdf2/libs.aarch64/*
 !/port/openjkdf2/libs.aarch64/.gitkeep
+/port/openjkdf2/libs.x86_64/*
+!/port/openjkdf2/libs.x86_64/.gitkeep
 
 # Legacy / obsolete in port tree
 /port/openjkdf2/gl4es.aarch64/
