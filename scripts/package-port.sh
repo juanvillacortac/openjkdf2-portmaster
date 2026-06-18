@@ -34,7 +34,16 @@ copy_lib() {
     fi
 }
 
-# SDL2/SDL2_mixer: system libs on device; bundle openal (+ GNS on x86_64 if built)
+# Do not bundle SDL/SDL_mixer — PortMaster CFWs ship their own (kmsdrm, audio, etc.).
+purge_bundled_sdl_libs() {
+    local dest="$1"
+    rm -f "$dest"/libSDL2*.so* "$dest"/libSDL2_mixer*.so* 2>/dev/null || true
+}
+
+purge_bundled_sdl_libs "$PORT/libs.aarch64"
+purge_bundled_sdl_libs "$PORT/libs.x86_64"
+
+# openal (+ GNS on x86_64 if built)
 copy_lib "$PORT/libs.aarch64" "$BUILD_A64/openal/libopenal.so"
 
 if [ -f "$BUILD_X64/openal/libopenal.so" ]; then

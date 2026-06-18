@@ -20,6 +20,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libopenal-dev \
     libcurl4-openssl-dev \
     libpulse-dev \
+    libdrm-dev \
+    libgbm-dev \
+    libegl1-mesa-dev \
+    libudev-dev \
     && pip3 install --no-cache-dir 'cmake>=3.20' \
     && rm -rf /var/lib/apt/lists/*
 

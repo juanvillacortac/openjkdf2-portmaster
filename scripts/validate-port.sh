@@ -114,6 +114,22 @@ else
     warn "jk1/episode and jk1/resource absent (expected in repo — user adds on device)"
 fi
 
+section "bundled libraries"
+if [[ -d "$LIBS" ]]; then
+    for f in "$LIBS"/libSDL2*.so* "$LIBS"/libSDL2_mixer*.so*; do
+        [[ -e "$f" ]] || continue
+        bad "Do not bundle SDL in libs.aarch64 (use system libs): $(basename "$f")"
+    done
+    [[ -f "$LIBS/libopenal.so" ]] && ok "libs.aarch64/libopenal.so present" \
+        || warn "libs.aarch64/libopenal.so missing (run ./build.sh)"
+fi
+if [[ -d "$LIBS_X64" ]]; then
+    for f in "$LIBS_X64"/libSDL2*.so* "$LIBS_X64"/libSDL2_mixer*.so*; do
+        [[ -e "$f" ]] || continue
+        bad "Do not bundle SDL in libs.x86_64 (use system libs): $(basename "$f")"
+    done
+fi
+
 section "aarch64 binary"
 if [[ -f "$BINARY" ]]; then
     [[ -x "$BINARY" ]] && ok "openjkdf2.aarch64 is executable" || warn "openjkdf2.aarch64 not +x"
