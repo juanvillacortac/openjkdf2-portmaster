@@ -122,12 +122,20 @@ if [[ -d "$LIBS" ]]; then
     done
     [[ -f "$LIBS/libopenal.so" ]] && ok "libs.aarch64/libopenal.so present" \
         || warn "libs.aarch64/libopenal.so missing (run ./build.sh)"
+    [[ -f "$LIBS/libGameNetworkingSockets.so" ]] && ok "libs.aarch64/libGameNetworkingSockets.so present" \
+        || warn "libs.aarch64/libGameNetworkingSockets.so missing (run ./build.sh with GNS enabled)"
+    [[ -f "$LIBS/libcrypto.so.1.1" ]] && ok "libs.aarch64/libcrypto.so.1.1 present (GNS/OpenSSL 1.1)" \
+        || warn "libs.aarch64/libcrypto.so.1.1 missing (GNS multiplayer will fail on OpenSSL 3 systems)"
 fi
 if [[ -d "$LIBS_X64" ]]; then
     for f in "$LIBS_X64"/libSDL2*.so* "$LIBS_X64"/libSDL2_mixer*.so*; do
         [[ -e "$f" ]] || continue
         bad "Do not bundle SDL in libs.x86_64 (use system libs): $(basename "$f")"
     done
+    [[ -f "$LIBS_X64/libGameNetworkingSockets.so" ]] && ok "libs.x86_64/libGameNetworkingSockets.so present" \
+        || warn "libs.x86_64/libGameNetworkingSockets.so missing (run ./build.sh with GNS enabled)"
+    [[ -f "$LIBS_X64/libcrypto.so.1.1" ]] && ok "libs.x86_64/libcrypto.so.1.1 present (GNS/OpenSSL 1.1)" \
+        || warn "libs.x86_64/libcrypto.so.1.1 missing (GNS multiplayer will fail on OpenSSL 3 systems)"
 fi
 
 section "aarch64 binary"
@@ -149,6 +157,10 @@ if [[ -f "$BINARY" ]]; then
                 libopenal.so.1)
                     [[ -f "$LIBS/libopenal.so" ]] && ok "NEEDED $lib → libs.aarch64/libopenal.so" \
                         || bad "NEEDED $lib but missing libs.aarch64/libopenal.so"
+                    ;;
+                libGameNetworkingSockets.so)
+                    [[ -f "$LIBS/libGameNetworkingSockets.so" ]] && ok "NEEDED $lib → libs.aarch64/libGameNetworkingSockets.so" \
+                        || bad "NEEDED $lib but missing libs.aarch64/libGameNetworkingSockets.so"
                     ;;
                 libGLESv2.so|libEGL.so)
                     ok "NEEDED $lib (system GLES on device)"
@@ -180,6 +192,10 @@ if [[ -f "$BINARY_X64" ]]; then
                 libopenal.so.1)
                     [[ -f "$LIBS_X64/libopenal.so" ]] && ok "NEEDED $lib → libs.x86_64/libopenal.so" \
                         || warn "NEEDED $lib but missing libs.x86_64/libopenal.so"
+                    ;;
+                libGameNetworkingSockets.so)
+                    [[ -f "$LIBS_X64/libGameNetworkingSockets.so" ]] && ok "NEEDED $lib → libs.x86_64/libGameNetworkingSockets.so" \
+                        || warn "NEEDED $lib but missing libs.x86_64/libGameNetworkingSockets.so"
                     ;;
                 libGL.so.1)
                     ok "NEEDED $lib (system OpenGL on RetroDECK/PC)"

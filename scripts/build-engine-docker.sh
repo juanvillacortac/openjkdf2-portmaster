@@ -20,7 +20,7 @@ docker run --rm \
     -e OPENJKDF2_PORTABLE_BUILD=1 \
     -e HOME=/tmp \
     "$IMAGE" \
-    bash -c 'git config --global --add safe.directory /work/OpenJKDF2 && git config --global --add safe.directory /work && ./scripts/build-engine.sh'
+    bash -c 'git config --global --add safe.directory "*" && ./scripts/build-engine.sh'
 
 # build tree may be owned by root
 if [[ -d "$ROOT/OpenJKDF2/build_aarch64" ]] && [[ ! -w "$ROOT/OpenJKDF2/build_aarch64" ]]; then

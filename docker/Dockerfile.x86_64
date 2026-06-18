@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgbm-dev \
     libegl1-mesa-dev \
     libudev-dev \
+    libssl-dev \
     && pip3 install --no-cache-dir 'cmake>=3.20' \
     && rm -rf /var/lib/apt/lists/*
 

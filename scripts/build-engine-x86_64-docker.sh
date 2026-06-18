@@ -21,7 +21,7 @@ docker run --rm \
     -e OPENJKDF2_PORTMASTER_BUILD=1 \
     -e HOME=/tmp \
     "$IMAGE" \
-    bash -c 'git config --global --add safe.directory /work/OpenJKDF2 && git config --global --add safe.directory /work && ./scripts/build-engine-x86_64.sh'
+    bash -c 'git config --global --add safe.directory "*" && ./scripts/build-engine-x86_64.sh'
 
 if [[ -d "$ROOT/OpenJKDF2/build_linux64" ]] && [[ ! -w "$ROOT/OpenJKDF2/build_linux64" ]]; then
     echo "Fixing ownership of build_linux64 (run: sudo chown -R \$USER OpenJKDF2/build_linux64)" >&2

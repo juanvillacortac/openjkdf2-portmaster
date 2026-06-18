@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-venv \
     python3-pip \
+    wget \
+    perl \
+    binutils \
+    build-essential \
     gcc-aarch64-linux-gnu \
     g++-aarch64-linux-gnu \
     libc6-arm64-cross \
@@ -19,7 +23,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     linux-libc-dev-arm64-cross \
     libgles2-mesa-dev \
     libegl1-mesa-dev \
+    libssl-dev \
     && pip3 install --no-cache-dir 'cmake>=3.20' \
+    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz -O /tmp/openssl.tgz \
+    && tar -C /tmp -xzf /tmp/openssl.tgz \
+    && cd /tmp/openssl-1.1.1w \
+    && CC=aarch64-linux-gnu-gcc ./Configure linux-aarch64 --prefix=/usr/aarch64-openssl no-tests shared \
+    && make -j"$(nproc)" && make install_sw \
+    && rm -rf /tmp/openssl* \
+    && apt-get purge -y wget \
+    && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /work
