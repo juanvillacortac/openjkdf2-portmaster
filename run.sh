@@ -228,4 +228,8 @@ if [[ $TEE_LOG -eq 1 ]]; then
     exec > >(tee "$PORT/log.txt") 2>&1
 fi
 
+export OPENJKDF2_HANDHELD=1
+export OPENJKDF2_CHEATS_MENU=1
+export OPENJKDF2_HUD_SCALE=2.0
+
 exec "$BIN" "${EXTRA_ARGS[@]}"

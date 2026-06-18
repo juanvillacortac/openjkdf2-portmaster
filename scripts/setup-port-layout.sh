@@ -51,7 +51,21 @@ write_placeholder "$PORT/mods" \
 "Mod packs as .gob files. Drop them in this folder."
 
 write_placeholder "$PORT/conf" \
-"OpenJKDF2 saves and settings (conf/openjkdf2/). Created when you play."
+"OpenJKDF2 saves and settings (conf/openjkdf2/). Created when you play.
+
+Multiplayer: copy mp.conf.example to mp.conf and edit join/host settings on a PC."
+
+if [[ ! -f "$PORT/conf/mp.conf.example" ]]; then
+    printf '%s\n' \
+        '# See mp.conf.example in the port repo for all options.' \
+        '[join]' \
+        'host=127.0.0.1' \
+        '' \
+        '[host]' \
+        'episode=JK1MP.gob' \
+        'map=m2.jkl' >"$PORT/conf/mp.conf.example"
+    echo "  conf/mp.conf.example"
+fi
 
 echo ""
 echo "Done. Game data is NOT included — copy GOG/Steam files to jk1/ on the device."
