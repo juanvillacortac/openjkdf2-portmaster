@@ -11,6 +11,6 @@ When syncing `jkdf2/port/` to `~/PortMaster-New/ports/openjkdf2/`, use `scripts/
 
 Also exclude dev/runtime junk: `log.txt`, `jk1/registry.json`, `jk1/openjkdf2_cvars.json`, `conf/mp.conf`.
 
-Helper scripts inside `openjkdf2/` use **`.run`** (not `.sh`) so EmulationStation does not list them as ports — e.g. `run-dedicated.run`, `run-mpserver.run`. Game launchers stay as `*.sh` at `ports/openjkdf2/`.
+Helper scripts inside `openjkdf2/` use **`.run`** (not `.sh`) so EmulationStation does not list them as ports — e.g. `run-dedicated.run`. Docker-only helpers live under `helpers/` (e.g. `helpers/mpserver-entrypoint.run`). Game launchers stay as `*.sh` at `ports/openjkdf2/`.
 
-After rsync, remove any stale `libs.*/.gitkeep` or old `run-dedicated.sh` left in the PortMaster-New tree before committing.
+After rsync, remove any stale `libs.*/.gitkeep`, `run-mpserver.run`, or root-level `mpserver-entrypoint.sh` left in the PortMaster-New tree before committing.

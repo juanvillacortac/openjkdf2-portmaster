@@ -41,15 +41,19 @@ rsync -a \
     --exclude 'libs.armhf/.gitkeep' \
     "$SRC_PORT/openjkdf2/" "$DEST/openjkdf2/"
 
-# Remove stale libs .gitkeep and legacy .sh helper names
+# Remove stale libs .gitkeep and legacy helper names
 rm -f \
     "$DEST/openjkdf2/libs.aarch64/.gitkeep" \
     "$DEST/openjkdf2/libs.x86_64/.gitkeep" \
     "$DEST/openjkdf2/libs.armhf/.gitkeep" \
     "$DEST/openjkdf2/run-dedicated.sh" \
-    "$DEST/openjkdf2/run-mpserver.sh" 2>/dev/null || true
+    "$DEST/openjkdf2/run-mpserver.sh" \
+    "$DEST/openjkdf2/run-mpserver.run" \
+    "$DEST/openjkdf2/mpserver-entrypoint.sh" 2>/dev/null || true
 
-chmod +x "$DEST/openjkdf2/run-dedicated.run" "$DEST/openjkdf2/run-mpserver.run" 2>/dev/null || true
+chmod +x \
+    "$DEST/openjkdf2/run-dedicated.run" \
+    "$DEST/openjkdf2/helpers/mpserver-entrypoint.run" 2>/dev/null || true
 
 echo "Synced to: $DEST"
 echo "  openjkdf2.aarch64: $(ls -lh "$DEST/openjkdf2/openjkdf2.aarch64" 2>/dev/null | awk '{print $5}' || echo missing)"

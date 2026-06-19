@@ -56,7 +56,7 @@ write_placeholder "$PORT/conf" \
 Multiplayer: copy mp.conf.example to mp.conf and edit on a PC.
 See MULTIPLAYER.md for LAN, Internet (Tailscale/VPS), and run-dedicated.run."
 
-chmod +x "$PORT/run-dedicated.run" "$PORT/run-mpserver.run" 2>/dev/null || true
+chmod +x "$PORT/run-dedicated.run" "$PORT/helpers/mpserver-entrypoint.run" 2>/dev/null || true
 
 if [[ ! -f "$PORT/conf/mp.conf.example" ]]; then
     printf '%s\n' \
