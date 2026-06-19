@@ -1,0 +1,16 @@
+---
+description: Syncing the OpenJKDF2 port to PortMaster-New
+alwaysApply: true
+---
+
+# PortMaster-New sync
+
+When syncing `jkdf2/port/` to `~/PortMaster-New/ports/openjkdf2/`, use `scripts/sync-portmaster-new.sh`.
+
+**Do not copy** `libs.aarch64/.gitkeep`, `libs.x86_64/.gitkeep`, or any `libs.*/.gitkeep` into PortMaster-New. Those placeholders exist only in the dev repo to keep empty `libs.*` dirs in git; the PortMaster port ships real `.so` files instead.
+
+Also exclude dev/runtime junk: `log.txt`, `jk1/registry.json`, `jk1/openjkdf2_cvars.json`, `conf/mp.conf`.
+
+Helper scripts inside `openjkdf2/` use **`.run`** (not `.sh`) so EmulationStation does not list them as ports — e.g. `run-dedicated.run`, `run-mpserver.run`. Game launchers stay as `*.sh` at `ports/openjkdf2/`.
+
+After rsync, remove any stale `libs.*/.gitkeep` or old `run-dedicated.sh` left in the PortMaster-New tree before committing.
