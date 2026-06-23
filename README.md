@@ -137,14 +137,14 @@ cd OpenJKDF2 && git submodule update --init --recursive && cd ..
 
 Requires **aarch64** and **PortMaster** with native **GLES** (Mali or equivalent). Tested on **knulli**; should also work on other PortMaster CFWs that meet those requirements.
 
-| CFW | Ports folder (typical) | Status |
-|-----|------------------------|--------|
-| [knulli](https://knulli.org/) | `/userdata/roms/ports/` | Tested (RG34XX SP) |
-| [muOS](https://muos.dev/) | `/mnt/mmc/ROMS/Ports/` or `/roms/ports/` | Expected |
-| [ROCKNIX](https://rocknix.org/) | `/roms/ports/` | Expected |
-| [ArkOS](https://github.com/christianhaitian/arkos) | `/roms/ports/` or `/roms2/ports/` | Expected |
-| [Batocera](https://batocera.org/) | varies by device | Expected |
-| AmberELEC / JELOS / UnofficialOS | `/roms/ports/` | Expected (aarch64 devices) |
+| CFW | Ports folder (typical) | Status | Notes |
+|-----|------------------------|--------|-------|
+| [knulli](https://knulli.org/) | `/userdata/roms/ports/` | Tested (RG34XX SP) | Requires enabling `ZRAMSWAP` via `System Settings > Services` |
+| [muOS](https://muos.dev/) | `/mnt/mmc/ROMS/Ports/` or `/roms/ports/` | Expected | |
+| [ROCKNIX](https://rocknix.org/) | `/roms/ports/` | Expected | |
+| [ArkOS](https://github.com/christianhaitian/arkos) | `/roms/ports/` or `/roms2/ports/` | Expected | |
+| [Batocera](https://batocera.org/) | varies by device | Expected | |
+| AmberELEC / JELOS / UnofficialOS | `/roms/ports/` | Expected (aarch64 devices) | |
 
 **Not supported:** 32-bit **armhf** devices (RG351P/M/V, R36S, ODROID-GO Advance/Super, etc.) — this port ships `openjkdf2.aarch64` only.
 

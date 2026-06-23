@@ -12,13 +12,13 @@ Saves and settings are stored under `openjkdf2/conf/`.
 
 **aarch64 handhelds:** Requires **PortMaster** with native **GLES** (Mali or equivalent).
 
-| CFW | Ports folder (typical) | Status |
-|-----|------------------------|--------|
-| [knulli](https://knulli.org/) | `/userdata/roms/ports/` | Tested |
-| [muOS](https://muos.dev/) | `/mnt/mmc/ROMS/Ports/` or `/roms/ports/` | Tested |
-| [ROCKNIX](https://rocknix.org/) | `/roms/ports/` | Tested |
-| [ArkOS / dArkOS](https://github.com/christianhaitian/arkos) | `/roms/ports/` or `/roms2/ports/` | Tested |
-| AmberELEC / JELOS / UnofficialOS | `/roms/ports/` | Tested (aarch64 devices) |
+| CFW | Ports folder (typical) | Status | Notes |
+|-----|------------------------|--------|-------|
+| [knulli](https://knulli.org/) | `/userdata/roms/ports/` | Tested | Requires enabling `ZRAMSWAP` via `System Settings > Services` |
+| [muOS](https://muos.dev/) | `/mnt/mmc/ROMS/Ports/` or `/roms/ports/` | Tested | |
+| [ROCKNIX](https://rocknix.org/) | `/roms/ports/` | Tested | |
+| [ArkOS / dArkOS](https://github.com/christianhaitian/arkos) | `/roms/ports/` or `/roms2/ports/` | Tested | |
+| AmberELEC / JELOS / UnofficialOS | `/roms/ports/` | Tested (aarch64 devices) | |
 
 **x86_64 Linux:** [RetroDECK](https://retrodeck.net/) / PortMaster on PC (Steam Deck, desktop). Uses `openjkdf2.x86_64` (OpenGL desktop build); handheld QOL env vars still apply.
 
